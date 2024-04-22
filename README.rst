@@ -5,6 +5,7 @@ Mohawk
     :target: https://pypi.python.org/pypi/mohawk
     :alt: Latest PyPI release
 
+<<<<<<< master
 .. image:: https://img.shields.io/pypi/dm/mohawk.svg
     :target: https://pypi.python.org/pypi/mohawk
     :alt: PyPI monthly download stats
@@ -34,3 +35,11 @@ Full documentation: https://mohawk.readthedocs.io/
 .. _`Hawk HTTP authorization scheme`: https://github.com/hueniverse/hawk
 .. _`HTTP MAC access authentication`: http://tools.ietf.org/html/draft-hammer-oauth-v2-mac-token-05
 .. _`OAuth 1.0`: http://tools.ietf.org/html/rfc5849
+=======
+Mohawk is an alternate Python implementation of the
+`Hawk HTTP authorization scheme`_.
+
+Full documentation: http://mohawk.readthedocs.org/
+
+.. _`Hawk HTTP authorization scheme`: https://github.com/hueniverse/hawk
+>>>>>>> 14f3100

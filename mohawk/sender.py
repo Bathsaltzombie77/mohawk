@@ -26,6 +26,7 @@ class Sender(HawkAuthority):
     :param method: Method of the request. E.G. POST, GET
     :type method: str
 
+<<<<<<< master
     :param content=EmptyValue: Byte string of request body or a file-like object.
     :type content=EmptyValue: str or file-like object
 
@@ -34,6 +35,16 @@ class Sender(HawkAuthority):
 
     :param always_hash_content=True:
         When True, ``content`` and ``content_type`` must be provided.
+=======
+    :param content=None: Byte string of request body.
+    :type content=None: str
+
+    :param content_type=None: content-type header value for request.
+    :type content_type=None: str
+
+    :param always_hash_content=True:
+        When True, ``content`` and ``content_type`` cannot be None.
+>>>>>>> 14f3100
         Read :ref:`skipping-content-checks` to learn more.
     :type always_hash_content=True: bool
 
@@ -119,6 +130,7 @@ class Sender(HawkAuthority):
             such as one created by :class:`mohawk.Receiver`.
         :type response_header: str
 
+<<<<<<< master
         :param content=EmptyValue: Byte string of the response body received.
         :type content=EmptyValue: str
 
@@ -129,6 +141,20 @@ class Sender(HawkAuthority):
         :param accept_untrusted_content=False:
             When True, allow responses that do not hash their content.
             Read :ref:`skipping-content-checks` to learn more.
+=======
+        :param content=None: Byte string of the response body received.
+        :type content=None: str
+
+        :param content_type=None:
+            Content-Type header value of the response received.
+        :type content_type=None: str
+
+        :param accept_untrusted_content=False:
+            When True, allow responses that do not hash their content or
+            allow None type ``content`` and ``content_type``
+            arguments. Read :ref:`skipping-content-checks`
+            to learn more.
+>>>>>>> 14f3100
         :type accept_untrusted_content=False: bool
 
         :param localtime_offset_in_seconds=0:

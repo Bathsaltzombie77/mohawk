@@ -24,6 +24,7 @@ Set up an environment
 
 Using a `virtualenv`_ you can set yourself up for development like this::
 
+<<<<<<< HEAD
     virtualenv _virtualenv
     source _virtualenv/bin/activate
     pip install -r requirements/dev.txt
@@ -39,10 +40,21 @@ Build the docs
 ==============
 
 In your virtualenv, you can build the docs like this::
+=======
+    pip install -r requirements/dev.txt
+    python setup.py develop
+
+Build the docs
+==============
+
+Tox will leave documentation artifacts in ``.tox/docs/tmp/html/index.html``
+but you can also build them manually like this::
+>>>>>>> 14f3100... Document all the things
 
     make -C docs/ html doctest
     open docs/_build/html/index.html
 
+<<<<<<< HEAD
 Publish a release
 =================
 
@@ -64,3 +76,8 @@ as both a source distribution and wheel::
 .. _virtualenv: https://pypi.python.org/pypi/virtualenv
 .. _tox: https://tox.readthedocs.io/
 .. _`PyPI`: https://pypi.python.org/pypi
+=======
+
+.. _virtualenv: https://pypi.python.org/pypi/virtualenv
+.. _tox: http://tox.readthedocs.org/
+>>>>>>> 14f3100... Document all the things

@@ -26,6 +26,7 @@ Exceptions
 
 .. automodule:: mohawk.exc
     :members:
+<<<<<<< HEAD
 
 Base
 ====
@@ -38,3 +39,5 @@ Base
 
     This is typically used as a placeholder of a default value
     so that internal code can differentiate it from ``None``.
+=======
+>>>>>>> 14f3100... Document all the things

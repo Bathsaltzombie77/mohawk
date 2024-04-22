@@ -10,6 +10,7 @@ Mohawk
 Mohawk is an alternate Python implementation of the
 `Hawk HTTP authorization scheme`_.
 
+<<<<<<< HEAD
 .. image:: https://img.shields.io/pypi/v/mohawk.svg
     :target: https://pypi.python.org/pypi/mohawk
     :alt: Latest PyPI release
@@ -39,23 +40,38 @@ It was redesigned to be more intuitive to developers, less prone to security pro
 .. _`Hawk HTTP authorization scheme`: https://github.com/hueniverse/hawk
 .. _`HTTP MAC access authentication`: http://tools.ietf.org/html/draft-hammer-oauth-v2-mac-token-05
 .. _`OAuth 1.0`: http://tools.ietf.org/html/rfc5849
+=======
+The Mohawk API is a little different from that of the Node library.
+It was redesigned to be more intuitive to developers, less prone to security
+problems, and more Pythonic.
+
+.. _`Hawk HTTP authorization scheme`: https://github.com/hueniverse/hawk
+>>>>>>> 14f3100... Document all the things
 
 Installation
 ============
 
+<<<<<<< HEAD
 Requirements:
 
 * Python 2.7+ or 3.4+
 * `six`_
 
 Using `pip`_::
+=======
+Using `pip`_ and Python >= 2.7::
+>>>>>>> 14f3100... Document all the things
 
     pip install mohawk
 
 
 If you want to install from source, visit https://github.com/kumar303/mohawk
 
+<<<<<<< HEAD
 .. _pip: https://pip.readthedocs.io/
+=======
+.. _pip: http://pip.readthedocs.org/
+>>>>>>> 14f3100... Document all the things
 
 Bugs
 ====
@@ -79,6 +95,7 @@ Topics
    developers
    why
 
+<<<<<<< HEAD
 Framework integration
 =====================
 
@@ -98,12 +115,20 @@ TODO
 
 * Support NTP-like (but secure) synchronization for local server time.
   See `TLSdate <http://linux-audit.com/tlsdate-the-secure-alternative-for-ntpd-ntpdate-and-rdate/>`_.
+=======
+TODO
+====
+
+* Implement bewit. **The bewit URI scheme is not implemented at this time.**
+* Support SNTP synchronization for local server time.
+>>>>>>> 14f3100... Document all the things
 * Support auto-retrying a :class:`mohawk.Sender` request with an offset if
   there is timestamp skew.
 
 Changelog
 ---------
 
+<<<<<<< HEAD
 - **UNRELEASED**
 
   - Dropped support for Python 2.6.
@@ -205,6 +230,9 @@ Changelog
     They will never contain non-ascii characters though.
 
 - **0.1.0** (2014-02-19)
+=======
+- **0.0.5** (unreleased)
+>>>>>>> 14f3100... Document all the things
 
   - Implemented optional content hashing per spec but in a less error prone way
   - Added complete documentation
@@ -233,7 +261,10 @@ Changelog
 
   - initial release of partial implementation
 
+<<<<<<< HEAD
 .. _six: https://pypi.python.org/pypi/six
+=======
+>>>>>>> 14f3100... Document all the things
 
 Indices and tables
 ==================
@@ -241,3 +272,7 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+<<<<<<< HEAD
+=======
+
+>>>>>>> 14f3100... Document all the things

@@ -6,12 +6,21 @@ Using Mohawk
 
 There are two parties involved in `Hawk`_ communication: a
 :class:`sender <mohawk.Sender>` and a :class:`receiver <mohawk.Receiver>`.
+<<<<<<< HEAD
 They use a shared secret to sign and verify each other's messages.
 
 **Sender**
     A client who wants to access a Hawk-protected resource.
     The client will sign their request and upon
     receiving a response will also verify the response signature.
+=======
+They use use a shared secret to sign and verify each other's messages.
+
+**Sender**
+    A client who wants to access a Hawk-protected resource.
+    The client will sign their request and when they receive a
+    response they will also verify the response signature.
+>>>>>>> 14f3100... Document all the things
 
 **Receiver**
     A server that uses Hawk to protect its resources. The server will check
@@ -29,12 +38,21 @@ section.
 
 .. testsetup:: usage
 
+<<<<<<< HEAD
     class Requests:
         def post(self, *a, **kw): pass
     requests = Requests()
 
     credentials = {'id': 'some-sender',
                    'key': 'a long, complicated secret',
+=======
+    class Request:
+        def post(self, *a, **kw): pass
+    request = Request()
+
+    credentials = {'id': 'some-sender',
+                   'key': 'some complicated SEKRET',
+>>>>>>> 14f3100... Document all the things
                    'algorithm': 'sha256'}
     allowed_senders = {}
     allowed_senders['some-sender'] = credentials
@@ -45,8 +63,11 @@ section.
         def set(self, *a, **kw): pass
     memcache = Memcache()
 
+<<<<<<< HEAD
 .. _`sending-request`:
 
+=======
+>>>>>>> 14f3100... Document all the things
 Sending a request
 =================
 
@@ -66,7 +87,11 @@ with all the elements of the request that you need to sign:
 
     >>> from mohawk import Sender
     >>> sender = Sender({'id': 'some-sender',
+<<<<<<< HEAD
     ...                  'key': 'a long, complicated secret',
+=======
+    ...                  'key': 'some complicated SEKRET',
+>>>>>>> 14f3100... Document all the things
     ...                  'algorithm': 'sha256'},
     ...                 url,
     ...                 method,
@@ -84,6 +109,7 @@ with your request:
 Using the `requests`_ library just as an example, you would send your POST
 like this:
 
+<<<<<<< HEAD
 .. doctest:: usage
 
     >>> requests.post(url, data=content,
@@ -93,6 +119,17 @@ like this:
 Notice how both the content and content-type values were signed by the Sender.
 In the case of a GET request you'll probably need to sign empty strings like
 ``Sender(..., 'GET', content='', content_type='')``,
+=======
+ .. doctest:: usage
+
+    >>> request.post(url, data=content,
+    ...              headers={'Authorization': sender.request_header,
+    ...                       'Content-Type': content_type})
+
+Notice how both the content and content-type values were signed by the Sender.
+In the case of a GET request you'll probably need to sign empty strings like
+``Sender(..., content='', content_type='')``,
+>>>>>>> 14f3100... Document all the things
 that is, if your request library doesn't
 automatically set a content-type for GET requests.
 
@@ -146,12 +183,15 @@ Create a :class:`mohawk.Receiver` using values from the incoming request:
 If this constructor does not raise any :ref:`exceptions` then the signature of
 the request is correct and you can proceed.
 
+<<<<<<< HEAD
 .. important::
 
     The server running :class:`mohawk.Receiver` code should synchronize its
     clock with something like `TLSdate`_ to make sure it compares timestamps
     correctly.
 
+=======
+>>>>>>> 14f3100... Document all the things
 Responding to a request
 =======================
 
@@ -175,7 +215,11 @@ This provides you with a similar Hawk header to use in the response:
     'Hawk mac="...", hash="...="'
 
 Using your web server's framework, respond with a
+<<<<<<< HEAD
 ``Server-Authorization`` header. For example:
+=======
+``Server-Authorization`` header, something like this:
+>>>>>>> 14f3100... Document all the things
 
 .. doctest:: usage
 
@@ -204,6 +248,7 @@ make sure nothing has been tampered with:
 If this method does not raise any :ref:`exceptions` then the signature of
 the response is correct and you can proceed.
 
+<<<<<<< HEAD
 Allowing senders to adjust their timestamps
 ===========================================
 
@@ -258,6 +303,8 @@ MAC using its own credentials and if the MACs both match it can trust that this
 is the real server's timestamp. This allows the sender to retry the request
 with an adjusted timestamp.
 
+=======
+>>>>>>> 14f3100... Document all the things
 .. _nonce:
 
 Using a nonce to prevent replay attacks
@@ -271,6 +318,7 @@ the quantity of an item just purchased if it were a commerce API that had an
 ``increment-item`` service.
 
 Hawk protects against replay attacks in a couple ways. First, a receiver checks
+<<<<<<< HEAD
 the timestamp of the message which may result in a
 :class:`mohawk.exc.TokenExpired` exception.
 Second, every message includes a `cryptographic nonce`_
@@ -278,6 +326,13 @@ which is a unique
 identifier. In combination with the sender's id and the request's timestamp, a
 receiver can use the nonce to know if it has *already* received the request. If
 so, the :class:`mohawk.exc.AlreadyProcessed` exception is raised.
+=======
+the timestamp of the message and if it has expired then it will reject the
+message. Second, every message includes a `cryptographic nonce`_
+which is a unique
+identifier. In combination with the timestamp, a receiver can use the nonce to
+know if it has *already* received the request. If so, it will reject it.
+>>>>>>> 14f3100... Document all the things
 
 By default, Mohawk doesn't know how to check nonce values; this is something
 your application needs to do.
@@ -287,6 +342,7 @@ your application needs to do.
     If you don't configure nonce checking, your application could be
     susceptible to replay attacks.
 
+<<<<<<< HEAD
 Make a callable that returns True if a sender's nonce plus its timestamp has been
 seen already. Here is an example using something like memcache:
 
@@ -295,6 +351,15 @@ seen already. Here is an example using something like memcache:
     >>> def seen_nonce(sender_id, nonce, timestamp):
     ...     key = '{id}:{nonce}:{ts}'.format(id=sender_id, nonce=nonce,
     ...                                      ts=timestamp)
+=======
+Make a callable that returns True if a nonce and timestamp have been
+seen or not. Here is an example using something like memcache:
+
+.. doctest:: usage
+
+    >>> def seen_nonce(nonce, timestamp):
+    ...     key = '{n}:{ts}'.format(n=nonce, ts=timestamp)
+>>>>>>> 14f3100... Document all the things
     ...     if memcache.get(key):
     ...         # We have already processed this nonce + timestamp.
     ...         return True
@@ -324,6 +389,7 @@ will be raised.
 
 When a *sender* calls :meth:`mohawk.Sender.accept_response`, it will receive
 a Hawk message but the nonce will be that of the original request.
+<<<<<<< HEAD
 In other words, the nonce received is the same nonce that the sender
 generated and signed when initiating the request.
 This generally means you don't have to worry about *response* replay attacks.
@@ -331,13 +397,23 @@ However, if you
 expose your :meth:`mohawk.Sender.accept_response` call
 somewhere publicly over HTTP then you
 may need to protect against response replay attacks.
+=======
+This generally means you don't have to worry about *response* replay attacks.
+However, if you
+expose your ``acccept_response()`` call somewhere publicly over HTTP then you
+may wish to protect against response replay attacks.
+>>>>>>> 14f3100... Document all the things
 You can do so by constructing a :class:`mohawk.Sender` with
 the same ``seen_nonce`` keyword:
 
 .. doctest:: usage
 
     >>> sender = Sender({'id': 'some-sender',
+<<<<<<< HEAD
     ...                  'key': 'a long, complicated secret',
+=======
+    ...                  'key': 'some complicated SEKRET',
+>>>>>>> 14f3100... Document all the things
     ...                  'algorithm': 'sha256'},
     ...                 url,
     ...                 method,
@@ -352,6 +428,7 @@ the same ``seen_nonce`` keyword:
 Skipping content checks
 =======================
 
+<<<<<<< HEAD
 In some cases you may not be able to hash request/response content. For
 example, the content could be too large. If you run into this, Hawk
 might not be the best fit for you but Hawk does allow you to accept
@@ -361,6 +438,17 @@ content without a declared hash if you wish.
 
     By allowing content without a declared hash, both the sender and
     receiver are susceptible to content tampering.
+=======
+In some cases you may not be able to sign request/response content. For example,
+the content could be too large to fit in memory. If you run into this, Hawk
+might not be the best fit for you but Hawk does allow you to skip content
+checks if you wish.
+
+.. important::
+
+    By skipping content checks both the sender and receiver are
+    susceptible to content tampering.
+>>>>>>> 14f3100... Document all the things
 
 You can send a request without signing the content by passing this keyword
 argument to a :class:`mohawk.Sender`:
@@ -370,8 +458,12 @@ argument to a :class:`mohawk.Sender`:
     >>> sender = Sender(credentials, url, method, always_hash_content=False)
 
 This says to skip hashing of the ``content`` and ``content_type`` values
+<<<<<<< HEAD
 if they are both :data:`mohawk.base.EmptyValue`.
 if they are both :attr:``mohawk.EmptyValue``.
+=======
+if they are both ``None``.
+>>>>>>> 14f3100... Document all the things
 
 Now you'll get an ``Authorization`` header without a ``hash`` attribute:
 
@@ -380,8 +472,13 @@ Now you'll get an ``Authorization`` header without a ``hash`` attribute:
     >>> sender.request_header
     'Hawk mac="...", id="some-sender", ts="...", nonce="..."'
 
+<<<<<<< HEAD
 The :class:`mohawk.Receiver` must also be constructed to accept content
 without a declared hash using ``accept_untrusted_content=True``:
+=======
+The :class:`mohawk.Receiver` must also be constructed to
+accept unsigned content, like this:
+>>>>>>> 14f3100... Document all the things
 
 .. doctest:: usage
 
@@ -389,6 +486,7 @@ without a declared hash using ``accept_untrusted_content=True``:
     ...                     sender.request_header,
     ...                     request['url'],
     ...                     request['method'],
+<<<<<<< HEAD
     ...                     content=request['content'],
     ...                     content_type=request['headers']['Content-Type'],
     ...                     accept_untrusted_content=True)
@@ -519,6 +617,10 @@ be coerced to ``''`` prior to hashing. This is to account for some dependent
 libraries that may provide the empty string even when no content is present
 on the request.
 
+=======
+    ...                     accept_untrusted_content=True)
+
+>>>>>>> 14f3100... Document all the things
 Logging
 =======
 
@@ -527,7 +629,11 @@ channels stem from ``mohawk``. For example, the ``mohawk.receiver``
 channel will just contain receiver messages. These channels correspond
 to the submodules within mohawk.
 
+<<<<<<< HEAD
 To debug :class:`mohawk.exc.MacMismatch` :ref:`exceptions`
+=======
+To debug :class:`mohawk.exc.MacMismatch` exceptions
+>>>>>>> 14f3100... Document all the things
 and other authorization errors, set the ``mohawk`` channel to ``DEBUG``.
 
 Going further
@@ -537,6 +643,9 @@ Well, hey, that about summarizes the concepts and basic usage of Mohawk.
 Check out the :ref:`API` for details.
 Also make sure you are familiar with :ref:`security`.
 
+<<<<<<< HEAD
 .. _`TLSdate`: http://linux-audit.com/tlsdate-the-secure-alternative-for-ntpd-ntpdate-and-rdate/
+=======
+>>>>>>> 14f3100... Document all the things
 .. _`Hawk`: https://github.com/hueniverse/hawk
 .. _`requests`: http://docs.python-requests.org/
