@@ -720,6 +720,42 @@ class TestReceiver(Base):
                                     always_hash_content=False))
 
     @raises(MisComputedContentHash)
+    def test_expected_unhashed_content_with_empty_content_type(self):
+        # This test sets up a scenario where the receiver will receive some
+        # content but the empty string for the content_type and no content hash
+        # in the auth header.
+        # This is to confirm that the hash is calculated and compared (to the
+        # hash of mock empty payload, which should fail) when the sender has
+        # sent unhashed content.
+        self.receive(content='some content',
+                     content_type='',
+                     sender_kw=dict(content=EmptyValue,
+                                    content_type=EmptyValue,
+                                    always_hash_content=False))
+
+    def test_empty_content_with_content_type(self):
+        # This test sets up a scenario where the receiver will receive an
+        # empty content string, some value for content_type and a content hash.
+        # This is to confirm that the hash is calculated and compared correctly
+        # when the sender has sent a hashed 0-length payload body.
+        self.receive(content='',
+                     content_type='text/plain',
+                     sender_kw=dict(content='',
+                                    content_type='text/plain'))
+
+    def test_expected_unhashed_no_content(self):
+        # This test sets up a scenario where the receiver will receive None for
+        # content and content_type and no content hash in the auth header.
+        # This is like test_expected_unhashed_empty_content(), but tests for
+        # the less ambiguous case where the caller has explicitly passed in None
+        # to indicate that there is no content to hash.
+        self.receive(content=None,
+                     content_type=None,
+                     sender_kw=dict(content=EmptyValue,
+                                    content_type=EmptyValue,
+                                    always_hash_content=False))
+
+    @raises(MisComputedContentHash)
     def test_expected_unhashed_no_content_with_content_type(self):
         # This test sets up a scenario where the receiver will receive None for
         # content and no content hash in the auth header, but some value for

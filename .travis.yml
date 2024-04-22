@@ -19,6 +19,7 @@ matrix:
           sudo: required
           dist: xenial
         - python: "3.7"
+        - python: "2.7"
           env: TOXENV=docs
           sudo: required
           dist: xenial
